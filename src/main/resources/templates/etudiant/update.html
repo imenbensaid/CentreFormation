@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="/navbar :: navbar">  
+</div>
+<div align="center" class="container">
+ <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">  Formulaire de modification d'un etudiant</p>
+
+             
+<form    class="mx-1 mx-md-4" action="/etudiant/update" method="post"   >
+<table>
+<tr>
+<td> Nom</td>
+<td> <input type="text" th:value="${etudiant.nom}" name="nom" class="form-control" >
+<input type="text" th:value="${etudiant.id}" name="id" hidden="" class="form-control" >
+</td>
+</tr>
+<tr>
+<td> Prenom </td>
+<td><input type="text" th:value="${etudiant.prenom}" name="prenom" class="form-control"></td>
+</tr>
+<tr>
+<td> Telephone </td>
+<td><input type="number" th:value="${etudiant.tel}" name="tel" class="form-control"></td>
+</tr>
+<tr>
+ <td> Nni </td>
+<td><input type="number" th:value="${etudiant.nni}" name="nni" class="form-control"></td>
+</tr>
+<tr>
+<td> Date de naissence </td>
+<td><input type="date" th:value="${etudiant.dateN}" name="dateN" class="form-control"></td>
+</tr>
+ 
+</table>
+<input type="submit" class="btn btn-success" value="Enregistrer"  >
+</form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>

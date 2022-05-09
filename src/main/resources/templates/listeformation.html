@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>liste de formation </title>
+ 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" href="/webjars/bootstrap/5.0.1/css/bootstrap.min.css">
+
+</head>
+<body>
+<div th:replace="/navbar :: navbar">  
+</div>
+<div class="container mt-3">
+    <div align=center class="card w-60">
+        <div class="card-header">le liste de formation</div>
+        <div  class="card-body">
+
+
+            <table align=center class="table " >
+                <thead class="thead-light"><tr>
+                    <th> Titre </th>
+                    <th> Formateur </th>
+                    <th>Date de debut</th>
+                    <th>Date de fin </th>
+                    <th> Frais</th>
+                    <th> Niveau </th>
+                    <th> Langue </th>
+                    <th> Action </th>
+
+                </tr></thead>
+                <tbody>
+                <tr th:each="formation:${listformations}">
+                    <td th:text="${formation.titre}"></td>
+                    <td th:text="${formation.formateur.nom}+' '+${formation.formateur.prenom} "></td>
+                    <td th:text="${formation.datedbut}"></td>
+                    <td th:text="${formation.datefin}"></td>
+                    <td th:text="${formation.frais}"></td>
+                    <td th:text="${formation.niveau}"></td>
+                    <td th:text="${formation.langue}"></td>
+
+                    <td>
+                        <a th:href="@{'/update/'+${formation.id}}"  class="btn btn-warning btn-sm" > Edite</a>
+
+                        <a th:href="@{'/delete/'+${formation.id}}"  class="btn btn-danger btn-sm"  >Delete </a>
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <ul class="nav nav-pills">
+                <li th:each="page,status :${pages}">
+                    <a th:text="${status.index}"
+                       th:class="${status.index==currentpage ? 'btn btn-info ms-1':'btn btn-outline-info ms-1'}"
+                       th:href="@{/(page=${status.index})}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+<br/>
+
+<div align=center>
+    <a th:href="@{/create}"><input type="submit" value="Ajouter" class="btn btn-success"></input></a>
+</div>
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <canvas id="chartBar">
+
+
+                        </canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+   <script th:inline="javascript"> 	// Enable Thymeleaf inlining
+  	var nbretudiant = [[${nbreparfor}]];
+    var titre =[[${titre}]]
+var chartBar_Data = {
+  labels: titre,
+  datasets: [{
+    label: 'Nombre des etudiants Par Formation',
+    data: nbretudiant,
+    backgroundColor: ['red','blue','yellow','green','purple','orange'],
+    borderColor: 'black',
+    borderWidth: 3
+  }]
+}
+
+var chartBar = document.getElementById('chartBar').getContext('2d');
+if (chartBar) {
+  new Chart(chartBar, {
+    type: 'bar',
+    data: chartBar_Data,
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
+   </script>
+
+
+
+
+
+<!--    <script src="/css/javaS.js"></script>-->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+ integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+</div>
+</body>
+</html>
